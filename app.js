@@ -2,6 +2,9 @@ const express = require('express');
 const bParser = require('body-parser');
 const mongoose = require('mongoose');
 const keys = require('./config');
+const cron = require('node-cron');
+const deleteExpiredCompetitions = require('./cronJobs');
+const cronSchedule = '*/1 * * * *';
 
 const app = express();
 
@@ -20,6 +23,9 @@ app.use((err, req, res, next) => {
     const message = err.message;
     res.status(status).json({message: message});
   });
+
+  const job = cron.schedule(cronSchedule, deleteExpiredCompetitions);
+  job.start();
 
   mongoose.connect(keys.mdbKey).then(result => {
     app.listen(8080);

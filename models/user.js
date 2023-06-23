@@ -14,6 +14,14 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    profilePicture: {
+        type: String,
+        default: ''
+    },
+    winStreak: {
+        type: Number,
+        default: 0
+    },
     competitions: [{
         type: Schema.Types.ObjectId,
         ref: 'Competition'
@@ -22,6 +30,6 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'GroupCompetition'
     }]
-})
+});
 
 module.exports = mongoose.model('User', userSchema)
