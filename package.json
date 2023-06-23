@@ -1,0 +1,33 @@
+{
+  "name": "step-racer",
+  "version": "1.0.0",
+  "description": "Step Racer Backend API",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "start": "nodemon ./app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vem0n/Step-Racer.git"
+  },
+  "author": "Vem0n",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vem0n/Step-Racer/issues"
+  },
+  "homepage": "https://github.com/Vem0n/Step-Racer#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.0",
+    "mongodb": "^5.6.0",
+    "mongoose": "^7.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
