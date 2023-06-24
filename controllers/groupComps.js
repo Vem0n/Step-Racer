@@ -6,7 +6,14 @@ exports.getComps = async (req, res, next) => {
     try {
       const userId = req.userId;
       const results = await Competition.find({
-        $or: [{ owner1: userId }, { owner2: userId }],
+        $or: [
+          { owner1: userId },
+          { owner2: userId },
+          { owner3: userId },
+          { owner4: userId },
+          { owner5: userId },
+          { owner6: userId }
+        ],
       });
   
       if (!results || results.length === 0) {
@@ -228,60 +235,91 @@ exports.updateComp = async (req, res, next) => {
     let updatedFields = {};
 
     switch (userId) {
-        case comp.owner1:
-          if (stepsOwner1 !== undefined) {
-            updatedFields.stepsOwner1 = stepsOwner1;
-          }
-          if (owner1Status !== undefined) {
-            updatedFields.owner1Status = owner1Status;
-          }
-          break;
-  
-        case comp.owner2:
-          if (stepsOwner2 !== undefined) {
-            updatedFields.stepsOwner2 = stepsOwner2;
-          }
-          if (owner2Status !== undefined) {
-            updatedFields.owner2Status = owner2Status;
-          }
-          break;
-  
-        case comp.owner3:
-          if (stepsOwner3 !== undefined) {
-            updatedFields.stepsOwner3 = stepsOwner3;
-          }
-          if (owner3Status !== undefined) {
-            updatedFields.owner3Status = owner3Status;
-          }
-          break;
-  
-        case comp.owner4:
-          if (stepsOwner4 !== undefined) {
-            updatedFields.stepsOwner4 = stepsOwner4;
-          }
-          if (owner4Status !== undefined) {
-            updatedFields.owner4Status = owner4Status;
-          }
-          break;
-  
-        case comp.owner5:
-          if (stepsOwner5 !== undefined) {
-            updatedFields.stepsOwner5 = stepsOwner5;
-          }
-          if (owner5Status !== undefined) {
-            updatedFields.owner5Status = owner5Status;
-          }
-          break;
-  
-        case comp.owner6:
-          if (stepsOwner6 !== undefined) {
-            updatedFields.stepsOwner6 = stepsOwner6;
-          }
-          if (owner6Status !== undefined) {
-            updatedFields.owner6Status = owner6Status;
-          }
-          break;
-      }
+      case comp.owner1:
+        if (stepsOwner1 !== undefined && comp.stepsOwner1 !== null && comp.stepsOwner1 !== '0') {
+          updatedFields.stepsOwner1 = (parseInt(stepsOwner1) - parseInt(comp.stepsOwner1)).toString();
+        } else if (comp.stepsOwner1 === null) {
+          updatedFields.stepsOwner1 = '0';
+          updatedFields.initialSteps1 = stepsOwner1.toString();
+        } else if (comp.stepsOwner1 === '0') {
+          updatedFields.stepsOwner1 = (parseInt(stepsOwner1) - parseInt(comp.stepsOwner1)).toString();
+        }
+        if (owner1Status !== undefined) {
+          updatedFields.owner1Status = owner1Status;
+        }
+        break;
+    
+      case comp.owner2:
+        if (stepsOwner2 !== undefined && comp.stepsOwner2 !== null && comp.stepsOwner2 !== '0') {
+          updatedFields.stepsOwner2 = (parseInt(stepsOwner2) - parseInt(comp.stepsOwner2)).toString();
+        } else if (comp.stepsOwner2 === null) {
+          updatedFields.stepsOwner2 = '0';
+          updatedFields.initialSteps2 = stepsOwner2.toString();
+        } else if (comp.stepsOwner2 === '0') {
+          updatedFields.stepsOwner2 = (parseInt(stepsOwner2) - parseInt(comp.stepsOwner2)).toString();
+        }
+        if (owner2Status !== undefined) {
+          updatedFields.owner2Status = owner2Status;
+        }
+        break;
+    
+      case comp.owner3:
+        if (stepsOwner3 !== undefined && comp.stepsOwner3 !== null && comp.stepsOwner3 !== '0') {
+          updatedFields.stepsOwner3 = (parseInt(stepsOwner3) - parseInt(comp.stepsOwner3)).toString();
+        } else if (comp.stepsOwner3 === null) {
+          updatedFields.stepsOwner3 = '0';
+          updatedFields.initialSteps3 = stepsOwner3.toString();
+        } else if (comp.stepsOwner3 === '0') {
+          updatedFields.stepsOwner3 = (parseInt(stepsOwner3) - parseInt(comp.stepsOwner3)).toString();
+        }
+        if (owner3Status !== undefined) {
+          updatedFields.owner3Status = owner3Status;
+        }
+        break;
+    
+      case comp.owner4:
+        if (stepsOwner4 !== undefined && comp.stepsOwner4 !== null && comp.stepsOwner4 !== '0') {
+          updatedFields.stepsOwner4 = (parseInt(stepsOwner4) - parseInt(comp.stepsOwner4)).toString();
+        } else if (comp.stepsOwner4 === null) {
+          updatedFields.stepsOwner4 = '0';
+          updatedFields.initialSteps4 = stepsOwner4.toString();
+        } else if (comp.stepsOwner4 === '0') {
+          updatedFields.stepsOwner4 = (parseInt(stepsOwner4) - parseInt(comp.stepsOwner4)).toString();
+        }
+        if (owner4Status !== undefined) {
+          updatedFields.owner4Status = owner4Status;
+        }
+        break;
+    
+      case comp.owner5:
+        if (stepsOwner5 !== undefined && comp.stepsOwner5 !== null && comp.stepsOwner5 !== '0') {
+          updatedFields.stepsOwner5 = (parseInt(stepsOwner5) - parseInt(comp.stepsOwner5)).toString();
+        } else if (comp.stepsOwner5 === null) {
+          updatedFields.stepsOwner5 = '0';
+          updatedFields.initialSteps5 = stepsOwner5.toString();
+        } else if (comp.stepsOwner5 === '0') {
+          updatedFields.stepsOwner5 = (parseInt(stepsOwner5) - parseInt(comp.stepsOwner5)).toString();
+        }
+        if (owner5Status !== undefined) {
+          updatedFields.owner5Status = owner5Status;
+        }
+        break;
+    
+      case comp.owner6:
+        if (stepsOwner6 !== undefined && comp.stepsOwner6 !== null && comp.stepsOwner6 !== '0') {
+          updatedFields.stepsOwner6 = (parseInt(stepsOwner6) - parseInt(comp.stepsOwner6)).toString();
+        } else if (comp.stepsOwner6 === null) {
+          updatedFields.stepsOwner6 = '0';
+          updatedFields.initialSteps6 = stepsOwner6.toString();
+        } else if (comp.stepsOwner6 === '0') {
+          updatedFields.stepsOwner6 = (parseInt(stepsOwner6) - parseInt(comp.stepsOwner6)).toString();
+        }
+        if (owner6Status !== undefined) {
+          updatedFields.owner6Status = owner6Status;
+        }
+        break;
+    }
+    
 
     if (owner3) {
       const owner3User = await User.findOne({ email: owner3 });

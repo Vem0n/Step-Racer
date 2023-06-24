@@ -52,6 +52,14 @@ const competitionSchema = new Schema({
         type: String,
         default: null,
       },
+      initialSteps1: {
+        type: String,
+        default: null
+      },
+      initialSteps2: {
+        type: String,
+        default: null
+      },
       owner1Status: {
         type: String,
         default: null,

@@ -42,19 +42,19 @@ const groupCompetitionSchema = new Schema({
       },
       user3AcceptedStatus: {
         type: String,
-        default: "pending"
+        default: null
       },
       user4AcceptedStatus: {
         type: String,
-        default: "pending"
+        default: null
       },
       user5AcceptedStatus: {
         type: String,
-        default: "pending"
+        default: null
       },
       user6AcceptedStatus: {
         type: String,
-        default: "pending"
+        default: null
       },
       winner: {
         type: mongoose.Schema.Types.ObjectId,
@@ -103,6 +103,30 @@ const groupCompetitionSchema = new Schema({
       stepsOwner6: {
         type: String,
         default: null,
+      },
+      initialSteps1: {
+        type: String, 
+        default: null
+      },
+      initialSteps2: {
+        type: String, 
+        default: null
+      },
+      initialSteps3: {
+        type: String,
+        default: null
+      },
+      initialSteps4: {
+        type: String, 
+        default: null
+      },
+      initialSteps5: {
+       type: String, 
+       default: null
+    },
+      initialSteps6: {
+        type: String, 
+        default: null
       },
       owner1Status: {
         type: String,
