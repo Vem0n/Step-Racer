@@ -6,7 +6,7 @@
 - Node.js with Express framework and REST api
 - MongoDB as the database using Mongoose for object modeling
 
-### Schemas:
+### ✅ Schemas:
 - User Schema: Represents user information, including email, password, profile picture, and status emote.
 - Friend Schema: Defines the relationship between users, allowing users to add friends by email.
 - Competition Schema: Represents a competition instance, including participants, start time, end time, and step counts.
@@ -14,17 +14,17 @@
 
 ## Planned Backend Communication:
 
-1. **User Management:**
+1. ✅ **User Management:**
    - User signup: Accepts user credentials and creates a new user in the database.
    - User login: Authenticates user credentials and generates an access token for subsequent API calls.
    - User profile: Retrieves and updates user profile information.
 
-2. **Friend Management:**
+2. ✅ **Friend Management:**
    - Add friend: Accepts the friend's email and establishes a friendship connection between users.
    - Delete friend: Removes the friend connection between users.
    - Get friends list: Retrieves the list of friends for a specific user.
 
-3. **Competition Management:**
+3. ✅ **Competition Management:**
    - Create competition: Allows a user to propose a competition with selected friends or participants.
    - Accept competition: Enables a user to accept a proposed competition.
    - Update step counts: Retrieves step counts from fitness tracker APIs and updates the competition and user data.
