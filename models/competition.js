@@ -16,7 +16,11 @@ const competitionSchema = new Schema({
         type: String,
         default: "pending",
       },
-      length: {
+      userAcceptedStatus: {
+        type: String,
+        default: 'pending'
+      },
+      tLength: {
         type: String,
         required: true
       },

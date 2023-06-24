@@ -6,6 +6,11 @@ const cron = require('node-cron');
 const deleteExpiredCompetitions = require('./cronJobs');
 const cronSchedule = '*/1 * * * *';
 
+const authRoutes = require('./routes/auth');
+const compRoutes = require('./routes/comps');
+const gCompRoutes = require('./routes/groupComps');
+const friendshipRoutes = require('./routes/friendships');
+
 const app = express();
 
 app.use(bParser.json());
@@ -23,6 +28,11 @@ app.use((err, req, res, next) => {
     const message = err.message;
     res.status(status).json({message: message});
   });
+
+  app.use('/auth', authRoutes);
+  app.use('/friendship', friendshipRoutes);
+  app.use('/comps', compRoutes);
+  app.use('/groupComps', gCompRoutes);
 
   const job = cron.schedule(cronSchedule, deleteExpiredCompetitions);
   job.start();

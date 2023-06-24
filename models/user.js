@@ -29,6 +29,10 @@ const userSchema = new Schema({
     groupCompetitions: [{
         type: Schema.Types.ObjectId,
         ref: 'GroupCompetition'
+    }],
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Friendship'
     }]
 });
 

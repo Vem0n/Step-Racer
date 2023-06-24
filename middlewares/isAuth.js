@@ -23,9 +23,14 @@ const isAuth = async (req, res, next) => {
   
       // @ts-ignore
       req.userId = decodedToken.userId;
+      // @ts-ignore
+      req.userEmail = decodedToken.email;
+
       next();
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: 'Authorization failed' });
     }
   };
+
+  module.exports = isAuth;

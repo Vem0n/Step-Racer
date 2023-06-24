@@ -7,14 +7,21 @@ const friendshipSchema = new mongoose.Schema({
       ref: "User",
       required: true,
     },
+    user1email: {
+      type: String,
+      required: true,
+    },
     user2: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
+    user2email: {
+      type: String,
+      required: true
+    },
     status: {
       type: String,
-      enum: ["pending", "accepted"],
       default: "pending",
     }
   });

@@ -34,22 +34,51 @@ const groupCompetitionSchema = new Schema({
       },
       status: {
         type: String,
-        enum: ["pending", "active", "completed"],
         default: "pending",
+      },
+      user2AcceptedStatus: {
+        type: String,
+        default: "pending"
+      },
+      user3AcceptedStatus: {
+        type: String,
+        default: "pending"
+      },
+      user4AcceptedStatus: {
+        type: String,
+        default: "pending"
+      },
+      user5AcceptedStatus: {
+        type: String,
+        default: "pending"
+      },
+      user6AcceptedStatus: {
+        type: String,
+        default: "pending"
       },
       winner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         default: null,
       },
-      dateStarted: {
-        type: String,
-        required: true,
+      startedAt: {
+        type: Date,
         default: null,
       },
-      dateEnded: {
-        type: String,
+      endsAt: {
+        type: Date,
         default: null,
+      },
+      expiresAt: {
+        type: Date
+      },
+      tLength: {
+        type: String,
+        required: true
+      },
+      refreshIntervals: {
+        type: String,
+        required: true
       },
       stepsOwner1: {
         type: String,
