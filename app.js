@@ -3,7 +3,7 @@ const bParser = require('body-parser');
 const mongoose = require('mongoose');
 const keys = require('./config');
 const cron = require('node-cron');
-const deleteExpiredCompetitions = require('./cronJobs');
+const { deleteExpiredCompetitions, deleteExpiredGroupCompetitions } = require('./cronJobs');
 const cronSchedule = '*/1 * * * *';
 
 const authRoutes = require('./routes/auth');
@@ -34,8 +34,15 @@ app.use((err, req, res, next) => {
   app.use('/comps', compRoutes);
   app.use('/groupComps', gCompRoutes);
 
-  const job = cron.schedule(cronSchedule, deleteExpiredCompetitions);
+  const job = cron.schedule(cronSchedule, () => {
+    deleteExpiredCompetitions();
+  });
+  const job2 = cron.schedule(cronSchedule, () => {
+    deleteExpiredGroupCompetitions();
+  });
+  
   job.start();
+  job2.start();
 
   mongoose.connect(keys.mdbKey).then(result => {
     app.listen(8080);

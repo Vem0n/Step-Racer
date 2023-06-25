@@ -198,14 +198,9 @@ exports.getComps = async (req, res, next) => {
         } else if (comp.stepsOwner1 === '0') {
           updatedFields.stepsOwner1 = (parseInt(stepsOwner1) - parseInt(comp.stepsOwner1)).toString();
         }
-  
-        if (stepsOwner2 !== undefined && comp.stepsOwner2 !== null && comp.stepsOwner2 !== '0') {
-          updatedFields.stepsOwner2 = (parseInt(stepsOwner2) - parseInt(comp.stepsOwner2)).toString();
-        } else if (comp.stepsOwner2 === null) {
-          updatedFields.stepsOwner2 = '0';
-          updatedFields.initialSteps2 = stepsOwner2.toString();
-        } else if (comp.stepsOwner2 === '0') {
-          updatedFields.stepsOwner2 = (parseInt(stepsOwner2) - parseInt(comp.stepsOwner2)).toString();
+
+        if (owner1Status !== undefined) {
+          updatedFields.owner1Status = owner1Status;
         }
   
         const updatedComp = await Competition.findByIdAndUpdate(
@@ -223,8 +218,13 @@ exports.getComps = async (req, res, next) => {
       else if (userId === comp.owner2) {
         const updatedFields = {};
   
-        if (stepsOwner2 !== undefined) {
-          updatedFields.stepsOwner2 = stepsOwner2;
+        if (stepsOwner2 !== undefined && comp.stepsOwner2 !== null && comp.stepsOwner2 !== '0') {
+          updatedFields.stepsOwner2 = (parseInt(stepsOwner2) - parseInt(comp.stepsOwner2)).toString();
+        } else if (comp.stepsOwner2 === null) {
+          updatedFields.stepsOwner2 = '0';
+          updatedFields.initialSteps2 = stepsOwner2.toString();
+        } else if (comp.stepsOwner2 === '0') {
+          updatedFields.stepsOwner2 = (parseInt(stepsOwner2) - parseInt(comp.stepsOwner2)).toString();
         }
   
         if (owner2Status !== undefined) {
