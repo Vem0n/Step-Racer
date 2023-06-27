@@ -1,4 +1,3 @@
-const cron = require('node-cron');
 const Competition = require('./models/competition');
 const gCompetition = require('./models/groupCompetitions');
 
