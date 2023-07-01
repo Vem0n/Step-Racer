@@ -43,7 +43,6 @@ app.use((err, req, res, next) => {
   
   job.start();
   job2.start();
-  console.log('Jobs started succesfully');
 
   mongoose.connect(keys.mdbKey).then(result => {
     app.listen(8080);
