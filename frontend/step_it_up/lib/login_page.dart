@@ -17,6 +17,7 @@ class LoginPage extends StatelessWidget {
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
             final loginBloc = BlocProvider.of<LoginBloc>(context);
+            loginBloc.add(LoginValidator(context));
 
             void loginHandler() {
               final receivedUsername = email.text;
@@ -30,6 +31,9 @@ class LoginPage extends StatelessWidget {
               final loginData = LoginData(
                   email: receivedUsername, password: receivedPassword);
               loginBloc.add(LoginInitiated(loginData));
+              if (state is LoginCompleted) {
+                loginBloc.add(LoginComplete(context));
+              }
               email.text = '';
               password.text = '';
             }

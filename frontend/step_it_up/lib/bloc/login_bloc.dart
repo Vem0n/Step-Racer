@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:step_it_up/models/login_data.dart';
 import 'package:step_it_up/register_page.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:step_it_up/home_page.dart';
 import 'package:step_it_up/fetcher.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -33,17 +36,52 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginLoading());
         try {
           final jsonData = jsonEncode(event.data.toJson());
-          final response = await fetcher.post('http://10.0.2.2:8080/auth/login', jsonData);
+          final response =
+              await fetcher.post('http://10.0.2.2:8080/auth/login', jsonData);
+          final prefs = await SharedPreferences.getInstance();
+          final token = response.data['token'];
+          prefs.setString('token', token.toString());
           debugPrint(response.toString());
-          if(response.statusCode == 200) {
+          if (response.statusCode == 200) {
             debugPrint('Success');
+            final int? statusCode = response.statusCode;
+            emit(LoginCompleted(statusCode));
           } else if (response.statusCode != 200) {
             debugPrint('Failure');
           }
         } catch (e) {
           logger.d(e);
         }
-        emit(LoginInProgress());
+      } else if (event is LoginComplete) {
+        Navigator.push(
+          event.context,
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => HomePage(),
+          ),
+        );
+      } else if (event is LoginValidator) {
+        final prefs = await SharedPreferences.getInstance();
+        final String? token = prefs.getString('token');
+        if (token == null) {
+          return;
+        }
+
+        try {
+          if (JwtDecoder.isExpired(token)) {
+            prefs.remove('token');
+          } else if (!JwtDecoder.isExpired(token)) {
+            Navigator.push(
+              event.context,
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => HomePage(),
+              ),
+            );
+          }
+        } catch (e) {
+          logger.e('Something went wrong');
+        }
       }
     });
   }

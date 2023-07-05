@@ -20,3 +20,15 @@ class LoginInitiated extends LoginEvent {
 
   List<Object> get props => [data];
 }
+
+class LoginComplete extends LoginEvent {
+  final BuildContext context;
+
+  LoginComplete(this.context);
+}
+
+class LoginValidator extends LoginEvent {
+  final BuildContext context;
+
+  LoginValidator(this.context);
+}
