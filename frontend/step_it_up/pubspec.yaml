@@ -23,6 +23,7 @@ dev_dependencies:
       ref: master
   logger: ^1.1.0
   equatable: ^2.0.5
+  flutter_zoom_drawer: ^3.1.1
 
 flutter:
   uses-material-design: true
