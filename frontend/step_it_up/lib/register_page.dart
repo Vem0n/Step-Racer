@@ -46,6 +46,9 @@ class RegisterPage extends StatelessWidget {
               password.text = '';
               name.text = '';
               confirmPassword.text = '';
+              if (state is RegisterSuccess) {
+                registerBloc.add(RegisterRouter(context));
+              }
             }
 
             if (state is RegisterInProgress) {

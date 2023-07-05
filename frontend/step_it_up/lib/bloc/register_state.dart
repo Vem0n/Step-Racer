@@ -14,3 +14,19 @@ class RegisterFailed extends RegisterState {
 
   List<Object?> get props => [errorMessage];
 }
+
+class RegisterSuccess extends RegisterState {
+  final int? statusCode;
+
+  RegisterSuccess(this.statusCode) : super();
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is RegisterSuccess && other.statusCode == statusCode;
+  }
+
+  @override
+  int get hashCode => statusCode.hashCode;
+}
