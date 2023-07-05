@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:step_it_up/bloc/login_bloc.dart';
+import 'package:step_it_up/models/login_data.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key});
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+
+  LoginPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +17,28 @@ class LoginPage extends StatelessWidget {
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
             final loginBloc = BlocProvider.of<LoginBloc>(context);
+
+            void loginHandler() {
+              final receivedUsername = email.text;
+              final receivedPassword = password.text.toString();
+
+              if (receivedPassword.isEmpty || receivedUsername.isEmpty) {
+                debugPrint('Enter both cridentials');
+                return;
+              }
+
+              final loginData = LoginData(
+                  email: receivedUsername, password: receivedPassword);
+              loginBloc.add(LoginInitiated(loginData));
+              email.text = '';
+              password.text = '';
+            }
+
             if (state is LoginInProgress) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -79,16 +100,19 @@ class LoginPage extends StatelessWidget {
                             height: 60,
                             width: double.infinity,
                             child: TextFormField(
+                              controller: email,
                               decoration: const InputDecoration(
-                                  hintText: 'Username',
-                                  prefixIcon: Icon(Icons.person),
+                                  hintText: 'Email',
+                                  prefixIcon: Icon(Icons.email),
                                   border: InputBorder.none,
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 20, horizontal: 10)),
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Card(
                           elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -98,6 +122,8 @@ class LoginPage extends StatelessWidget {
                             height: 60,
                             width: double.infinity,
                             child: TextFormField(
+                              obscureText: true,
+                              controller: password,
                               decoration: const InputDecoration(
                                   hintText: 'Password',
                                   prefixIcon: Icon(Icons.lock),
@@ -118,7 +144,9 @@ class LoginPage extends StatelessWidget {
                             width: double.infinity,
                             height: 50,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                loginHandler();
+                              },
                               child: const Text('Login'),
                             ),
                           ),
@@ -131,7 +159,7 @@ class LoginPage extends StatelessWidget {
                   )
                 ],
               );
-            } else {
+            } else if (state is LoginInitial) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -198,6 +226,12 @@ class LoginPage extends StatelessWidget {
                     height: 80,
                   )
                 ],
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.blue,
+                ),
               );
             }
           },

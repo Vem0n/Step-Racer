@@ -1,178 +1,242 @@
 import 'package:flutter/material.dart';
 
+import 'bloc/register_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'models/register_data.dart';
+
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key});
+  final TextEditingController name = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+
+  RegisterPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
-                  child: Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.grey, width: 4),
-                        borderRadius: BorderRadius.circular(38)),
-                    color: Colors.transparent,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new,
-                        size: 30,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const SizedBox(
-              height: 95,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Register',
-                    style: TextStyle(fontSize: 42),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text('Create your account')
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: SizedBox(
-                height: 500,
-                width: double.infinity,
+    return BlocProvider(
+      create: (context) => RegisterBloc(),
+      child: Material(
+        child: BlocBuilder<RegisterBloc, RegisterState>(
+          builder: (context, state) {
+            final registerBloc = BlocProvider.of<RegisterBloc>(context);
+            void registerHandler() {
+              final receivedEmail = email.text.toString();
+              final receivedPassword = password.text.toString();
+              final receivedName = name.text.toString();
+              final confirmedPassword = confirmPassword.text.toString();
+
+              if (receivedPassword.isEmpty || receivedEmail.isEmpty || receivedName.isEmpty) {
+                debugPrint('Enter both cridentials');
+                return;
+              }
+
+              if (receivedPassword != confirmedPassword || confirmedPassword.isEmpty ) {
+                debugPrint("Passwords don't match");
+                return;
+              }
+
+              final registerData = RegisterData(
+                  name: receivedName,
+                  email: receivedEmail,
+                  password: receivedPassword);
+              registerBloc.add(RegisterHandler(registerData));
+              email.text = '';
+              password.text = '';
+              name.text = '';
+              confirmPassword.text = '';
+            }
+
+            if (state is RegisterInProgress) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.blue,
+                ),
+              );
+            } else {
+              return SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
-                      color: Colors.blueGrey,
-                      child: SizedBox(
-                        height: 60,
-                        width: double.infinity,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: 'Username',
-                              prefixIcon: Icon(Icons.person),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10)),
-                        ),
-                      ),
+                    const SizedBox(
+                      height: 20,
                     ),
-                    Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
-                      color: Colors.blueGrey,
-                      child: SizedBox(
-                        height: 60,
-                        width: double.infinity,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: 'Email Address',
-                              prefixIcon: Icon(Icons.email),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10)),
-                        ),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18.0),
+                          child: Card(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                    color: Colors.grey, width: 4),
+                                borderRadius: BorderRadius.circular(38)),
+                            color: Colors.transparent,
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios_new,
+                                size: 30,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
-                      color: Colors.blueGrey,
-                      child: SizedBox(
-                        height: 60,
-                        width: double.infinity,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: 'Password',
-                              prefixIcon: Icon(Icons.lock),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10)),
-                        ),
-                      ),
+                    const SizedBox(
+                      height: 30,
                     ),
-                    Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
-                      color: Colors.blueGrey,
-                      child: SizedBox(
-                        height: 60,
-                        width: double.infinity,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                              hintText: 'Confirm Password',
-                              prefixIcon: Icon(Icons.check_circle),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10)),
-                        ),
+                    SizedBox(
+                      height: 95,
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          const Text(
+                            'Register',
+                            style: TextStyle(fontSize: 42),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            state is RegisterFailed
+                                ? 'Registering failed, ${state.errorMessage}'
+                                : 'Create your account',
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(
                       height: 40,
-                      width: 270,
-                      child: Text(
-                          'By registering you are agreeing to your data being handled by the creator of this app'),
                     ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Card(
-                      elevation: 20,
-                      color: Colors.deepPurple,
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.circular(38)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
                       child: SizedBox(
+                        height: 500,
                         width: double.infinity,
-                        height: 50,
-                        child: TextButton(
-                          onPressed: () {
-                            // Perform registration logic
-                          },
-                          child: const Text('Register'),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
+                              color: Colors.blueGrey,
+                              child: SizedBox(
+                                height: 60,
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: name,
+                                  decoration: const InputDecoration(
+                                      hintText: 'Username',
+                                      prefixIcon: Icon(Icons.person),
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 20, horizontal: 10)),
+                                ),
+                              ),
+                            ),
+                            Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
+                              color: Colors.blueGrey,
+                              child: SizedBox(
+                                height: 60,
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: email,
+                                  decoration: const InputDecoration(
+                                      hintText: 'Email Address',
+                                      prefixIcon: Icon(Icons.email),
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 20, horizontal: 10)),
+                                ),
+                              ),
+                            ),
+                            Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
+                              color: Colors.blueGrey,
+                              child: SizedBox(
+                                height: 60,
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: password,
+                                  decoration: const InputDecoration(
+                                      hintText: 'Password',
+                                      prefixIcon: Icon(Icons.lock),
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 20, horizontal: 10)),
+                                ),
+                              ),
+                            ),
+                            Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
+                              color: Colors.blueGrey,
+                              child: SizedBox(
+                                height: 60,
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: confirmPassword,
+                                  decoration: const InputDecoration(
+                                      hintText: 'Confirm Password',
+                                      prefixIcon: Icon(Icons.check_circle),
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 20, horizontal: 10)),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 40,
+                              width: 270,
+                              child: Text(
+                                  'By registering you are agreeing to your data being handled by the creator of this app'),
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                            Card(
+                              elevation: 20,
+                              color: Colors.deepPurple,
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: Colors.black),
+                                  borderRadius: BorderRadius.circular(38)),
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                child: TextButton(
+                                  onPressed: () {
+                                    registerHandler();
+                                  },
+                                  child: const Text('Register'),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 90,
+                            )
+                          ],
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 90,
                     )
                   ],
                 ),
-              ),
-            )
-          ],
+              );
+            }
+          },
         ),
       ),
     );

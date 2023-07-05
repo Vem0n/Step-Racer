@@ -36,7 +36,7 @@ exports.signup = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Signup failed' });
+    return res.status(500).json({ error: 'Signup failed' });
   }
 };
 
@@ -50,7 +50,7 @@ exports.signup = async (req, res, next) => {
   
       const user = await User.findOne({ email: email });
       if (!user) {
-        console.log('No user with such email is found');
+        return res.status(404).json({ error: 'No user with this email found'} );
       }
   
       loadedUser = user;
@@ -58,7 +58,7 @@ exports.signup = async (req, res, next) => {
       // @ts-ignore
       const matched = await bcrypt.compare(password, user.password);
       if (!matched) {
-        throw new Error('Wrong email or password');
+        return res.status(400).json( {error: 'Wrong email or password'} );
       }
   
       const userToken = token.sign(
@@ -69,7 +69,11 @@ exports.signup = async (req, res, next) => {
   
       res.status(200).json({ token: userToken, userId: loadedUser?._id.toString() });
     } catch (e) {
-      console.log(e);
+      if (!e.statusCode) {
+        e.statusCode = 500;
+        next(e);
+        return res.status(500).json( {error: 'Something went wrong'} )
+      }
     }
   };
   
@@ -85,5 +89,6 @@ exports.signup = async (req, res, next) => {
         err.statusCode = 500;
       }
       next(err);
+      return res.status(500).json( {error: 'Something went wrong'} )
     }
   };

@@ -12,3 +12,11 @@ class SignUpChoiceSelected extends LoginEvent {
 
   SignUpChoiceSelected(this.context);
 }
+
+class LoginInitiated extends LoginEvent {
+  final LoginData data;
+
+  LoginInitiated(this.data);
+
+  List<Object> get props => [data];
+}
