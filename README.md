@@ -33,7 +33,7 @@
 
 ## Planned Features:
 
-1. **Signup and Login:**
+1. ✅ **Signup and Login:**
    - User registration with email and password.
    - Authentication using access tokens for secure API calls.
 
