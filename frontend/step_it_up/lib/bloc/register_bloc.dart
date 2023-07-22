@@ -8,7 +8,6 @@ import 'package:logger/logger.dart';
 import '../login_page.dart';
 import '../models/register_data.dart';
 import 'package:step_it_up/fetcher.dart';
-import 'package:dio/dio.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
@@ -16,6 +15,7 @@ part 'register_state.dart';
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final fetcher = ApiFetcher();
   final logger = Logger();
+
   RegisterBloc() : super(RegisterInitial()) {
     on<RegisterEvent>((event, emit) async {
       if (event is RegisterHandler) {
@@ -30,25 +30,23 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             emit(RegisterSuccess(statusCode));
           } else {
             debugPrint('Failure');
+            final responseData = response.data;
+            if (responseData is Map<String, dynamic>) {
+              if (responseData.containsKey('errors')) {
+                final errors = responseData['errors'] as List<dynamic>;
+                if (errors.isNotEmpty && errors.first is Map<String, dynamic>) {
+                  final errorMessage = errors.first['msg'];
+                  logger.d(errorMessage);
+                  emit(RegisterFailed(errorMessage));
+                  return;
+                }
+              }
+            }
+            emit(RegisterFailed('Something went wrong. Please try again later.'));
           }
         } catch (e) {
-          if (e is DioException && e.response != null) {
-            final responseData = e.response!.data;
-            if (responseData is Map<String, dynamic>) {
-              final errorMessage = responseData['message'];
-              logger.d(errorMessage);
-              emit(RegisterFailed(errorMessage));
-            } else if (responseData is String) {
-              final errorMessage = responseData;
-              logger.d(errorMessage);
-              emit(RegisterFailed(errorMessage));
-            } else {
-              logger.d(
-                  'Unexpected response data type: ${responseData.runtimeType}');
-            }
-          } else {
-            logger.d(e.toString());
-          }
+          debugPrint('Exception occurred: $e');
+          emit(RegisterFailed('An unexpected error occurred. Please try again later.'));
         }
       } else if (event is RegisterRouter) {
         Navigator.push(

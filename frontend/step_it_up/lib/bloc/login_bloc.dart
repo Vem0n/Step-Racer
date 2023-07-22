@@ -47,6 +47,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             final int? statusCode = response.statusCode;
             emit(LoginCompleted(statusCode));
           } else if (response.statusCode != 200) {
+            emit(LoginFailed());
             debugPrint('Failure');
           }
         } catch (e) {

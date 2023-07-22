@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
               password.text = '';
             }
 
-            if (state is LoginInProgress) {
+            if (state is LoginInProgress || state is LoginFailed) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -75,17 +75,21 @@ class LoginPage extends StatelessWidget {
                     height: 30,
                   ),
                   const Icon(Icons.image, size: 100),
-                  const SizedBox(
+                  SizedBox(
                     height: 100,
                     width: double.infinity,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
+                        const Text(
                           'Welcome Back',
                           style: TextStyle(fontSize: 42),
                         ),
-                        Text('Create your account')
+                        Text(
+                          (state is LoginFailed)
+                              ? 'Wrong credentials'
+                              : 'Log into your account',
+                        ),
                       ],
                     ),
                   ),
