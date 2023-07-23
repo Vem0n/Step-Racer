@@ -24,6 +24,10 @@ dev_dependencies:
   logger: ^1.1.0
   equatable: ^2.0.5
   flutter_zoom_drawer: ^3.1.1
+  intl: ^0.18.1
+  page_view_dot_indicator: ^2.1.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/default_profile_picture.jpg
