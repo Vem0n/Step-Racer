@@ -74,7 +74,15 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Icon(Icons.image, size: 100),
+                  Container(
+                    width: 120,
+                    height: 120,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/app_icon.png'),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
                   SizedBox(
                     height: 100,
                     width: double.infinity,
@@ -171,18 +179,31 @@ class LoginPage extends StatelessWidget {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Icon(Icons.image, size: 300),
-                  const SizedBox(
+                  Container(
+                    width: 300,
+                    height: 300,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/app_icon.png'),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  SizedBox(
                     width: 280,
                     height: 120,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          'Step It Up!',
-                          style: TextStyle(fontSize: 60),
+                        Container(
+                          width: double.infinity,
+                          height: 80,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/login_header.png'),
+                                fit: BoxFit.cover),
+                          ),
                         ),
-                        Text('Show your friends who rules the streets')
+                        const Text('Show your friends who rules the streets')
                       ],
                     ),
                   ),

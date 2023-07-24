@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                 borderRadius: 30,
                 showShadow: true,
                 angle: 0.0,
-                menuBackgroundColor: Color.fromARGB(255, 156, 137, 184),
+                menuBackgroundColor: const Color.fromARGB(255, 156, 137, 184),
               );
             }
           },
@@ -131,33 +131,35 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              DrawerWdiget(),
-              SizedBox(
+              const DrawerWdiget(),
+              const SizedBox(
                 width: 12,
               ),
-              Text(
-                'Step It Up!',
-                style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+              Container(
+                width: 250,
+                height: 80,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/app_logo.png'),
+                      fit: BoxFit.cover),
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 12,
               ),
-              Icon(
+              const Icon(
                 Icons.person,
                 size: 30,
                 color: Colors.black,
               )
             ],
           ),
-          backgroundColor: Color.fromARGB(255, 240, 230, 239),
+          backgroundColor: const Color.fromARGB(255, 240, 230, 239),
           elevation: 0),
-      backgroundColor: Color.fromARGB(255, 240, 230, 239),
+      backgroundColor: const Color.fromARGB(255, 240, 230, 239),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -200,7 +202,7 @@ class MainScreen extends StatelessWidget {
                     elevation: 12,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18)),
-                    color: Color.fromARGB(255, 184, 190, 221),
+                    color: const Color.fromARGB(255, 184, 190, 221),
                     child: SizedBox(
                       width: double.infinity,
                       height: 400,

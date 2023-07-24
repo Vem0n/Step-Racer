@@ -32,3 +32,6 @@ flutter:
   assets:
     - assets/default_profile_picture.jpg
     - assets/trophy_icon.png
+    - assets/app_logo.png
+    - assets/app_icon.png
+    - assets/login_header.png
