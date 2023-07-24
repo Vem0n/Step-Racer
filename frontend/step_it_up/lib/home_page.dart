@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
             } else {
               return ZoomDrawer(
                 menuScreen: const DrawerScreen(),
-                mainScreen: SingleChildScrollView(child: MainScreen()),
+                mainScreen: MainScreen(),
                 borderRadius: 30,
                 showShadow: true,
                 angle: 0.0,
@@ -129,14 +129,9 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          const Row(
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               DrawerWdiget(),
@@ -145,7 +140,10 @@ class MainScreen extends StatelessWidget {
               ),
               Text(
                 'Step It Up!',
-                style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 34,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
               SizedBox(
                 width: 12,
@@ -153,26 +151,38 @@ class MainScreen extends StatelessWidget {
               Icon(
                 Icons.person,
                 size: 30,
+                color: Colors.black,
               )
             ],
           ),
-          const SizedBox(
-            height: 12,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: OngoingCompetitionsCard(competitions: dummyData),
+          backgroundColor: Colors.transparent,
+          elevation: 0),
+      backgroundColor: Colors.lightBlueAccent,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 12,
+            ),
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: OngoingCompetitionsCard(competitions: dummyData),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child:
+                        OngoingGroupCompetitionsCard(competitions: dummyData2),
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: OngoingGroupCompetitionsCard(competitions: dummyData2),
-              )
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -315,7 +325,7 @@ class DrawerWdiget extends StatelessWidget {
       onPressed: () {
         ZoomDrawer.of(context)!.toggle();
       },
-      icon: const Icon(Icons.menu),
+      icon: const Icon(Icons.menu, color: Colors.black,),
     );
   }
 }
@@ -572,7 +582,7 @@ class GroupCompetitionCardView extends StatelessWidget {
                 ),
                 Text(
                   competition.user1,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const Text('Score:'),
                 Text('${competition.score1}'),
@@ -597,7 +607,7 @@ class GroupCompetitionCardView extends StatelessWidget {
                 ),
                 Text(
                   competition.user2,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const Text('Score:'),
                 Text('${competition.score2}'),
@@ -623,7 +633,7 @@ class GroupCompetitionCardView extends StatelessWidget {
                   ),
                   Text(
                     competition.user3!,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Text('Score:'),
                   Text('${competition.score3}'),
@@ -649,7 +659,7 @@ class GroupCompetitionCardView extends StatelessWidget {
                   ),
                   Text(
                     competition.user4!,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Text('Score:'),
                   Text('${competition.score4}'),
@@ -675,7 +685,7 @@ class GroupCompetitionCardView extends StatelessWidget {
                   ),
                   Text(
                     competition.user5!,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Text('Score:'),
                   Text('${competition.score5}'),
@@ -701,7 +711,7 @@ class GroupCompetitionCardView extends StatelessWidget {
                   ),
                   Text(
                     competition.user6!,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Text('Score:'),
                   Text('${competition.score6}'),
@@ -709,7 +719,7 @@ class GroupCompetitionCardView extends StatelessWidget {
               ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(
@@ -728,7 +738,7 @@ class GroupCompetitionCardView extends StatelessWidget {
                 size: 40,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 38,
             )
           ],
