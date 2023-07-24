@@ -23,7 +23,7 @@ class _OngoingGroupCompetitionsCardState
     return Card(
       elevation: 12,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-      color: Colors.blueGrey,
+      color: Color.fromARGB(255, 184, 190, 221),
       child: Column(
         children: [
           SizedBox(

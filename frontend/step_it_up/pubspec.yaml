@@ -31,3 +31,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/default_profile_picture.jpg
+    - assets/trophy_icon.png

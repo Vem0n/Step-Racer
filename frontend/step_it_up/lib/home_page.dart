@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                 borderRadius: 30,
                 showShadow: true,
                 angle: 0.0,
-                menuBackgroundColor: Colors.blue,
+                menuBackgroundColor: Color.fromARGB(255, 156, 137, 184),
               );
             }
           },
@@ -155,32 +155,92 @@ class MainScreen extends StatelessWidget {
               )
             ],
           ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color.fromARGB(255, 240, 230, 239),
           elevation: 0),
-      backgroundColor: Colors.lightBlueAccent,
+      backgroundColor: Color.fromARGB(255, 240, 230, 239),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(
               height: 12,
             ),
-            SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                if (dummyData.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: OngoingCompetitionsCard(competitions: dummyData),
                   ),
+                if (dummyData2.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child:
                         OngoingGroupCompetitionsCard(competitions: dummyData2),
-                  )
-                ],
-              ),
-            )
+                  ),
+                if (dummyData.isEmpty && dummyData2.isEmpty)
+                  const Column(
+                    children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Nothing here yet!',
+                              style: TextStyle(
+                                  fontSize: 28, fontWeight: FontWeight.bold),
+                            ),
+                          ]),
+                      Text('Compete with friends to start')
+                    ],
+                  ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Card(
+                    elevation: 12,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
+                    color: Color.fromARGB(255, 184, 190, 221),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 400,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 300,
+                            height: 300,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('assets/trophy_icon.png'),
+                                  fit: BoxFit.cover),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          const Text(
+                            'Your trophies will be right here!',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          const Text(
+                            "Well, if you get any...",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -194,7 +254,7 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Color.fromARGB(255, 156, 137, 184),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -325,7 +385,10 @@ class DrawerWdiget extends StatelessWidget {
       onPressed: () {
         ZoomDrawer.of(context)!.toggle();
       },
-      icon: const Icon(Icons.menu, color: Colors.black,),
+      icon: const Icon(
+        Icons.menu,
+        color: Colors.black,
+      ),
     );
   }
 }

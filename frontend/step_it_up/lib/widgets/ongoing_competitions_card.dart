@@ -3,7 +3,6 @@ import 'package:step_it_up/models/competition_model.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 import 'package:intl/intl.dart';
 
-
 class OngoingCompetitionsCard extends StatefulWidget {
   final List<CompetitionCard> competitions;
 
@@ -23,7 +22,7 @@ class _OngoingCompetitionsCardState extends State<OngoingCompetitionsCard> {
     return Card(
       elevation: 12,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-      color: Colors.blueGrey,
+      color: Color.fromARGB(255, 184, 190, 221),
       child: Column(
         children: [
           SizedBox(
