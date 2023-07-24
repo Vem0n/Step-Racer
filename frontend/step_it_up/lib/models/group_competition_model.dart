@@ -1,4 +1,4 @@
-class CompetitionCard {
+class GroupCompetitionCard {
   late final String? user1pic;
   late final String? user2pic;
   late final String? user3pic;
@@ -19,7 +19,7 @@ class CompetitionCard {
   late int? score5;
   late int? score6;
 
-  CompetitionCard(
+  GroupCompetitionCard(
       {required this.user1,
       required this.user2,
       this.user3,
