@@ -5,4 +5,6 @@ abstract class HomePageState {}
 
 class HomePageInitial extends HomePageState {}
 
-class HomePageLoaded extends HomePageState {}
+class HomePageLoadedNoDevice extends HomePageState {}
+
+class HomePageLoadedSetDevice extends HomePageState {}

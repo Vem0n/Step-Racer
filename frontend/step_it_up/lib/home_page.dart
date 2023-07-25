@@ -4,8 +4,11 @@ import 'bloc/home_page_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'models/competition_model.dart';
 import 'models/group_competition_model.dart';
+import 'models/friend_model.dart';
 import 'widgets/ongoing_competitions_card.dart';
 import 'widgets/ongoing_group_competitions_card.dart';
+import 'widgets/trophy_card.dart';
+import 'widgets/friend_tiles.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -28,7 +31,7 @@ class HomePage extends StatelessWidget {
               );
             } else {
               return ZoomDrawer(
-                menuScreen: const DrawerScreen(),
+                menuScreen: DrawerScreen(),
                 mainScreen: MainScreen(),
                 borderRadius: 30,
                 showShadow: true,
@@ -160,204 +163,199 @@ class MainScreen extends StatelessWidget {
           backgroundColor: const Color.fromARGB(255, 240, 230, 239),
           elevation: 0),
       backgroundColor: const Color.fromARGB(255, 240, 230, 239),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const SizedBox(
-              height: 12,
-            ),
-            Column(
+      body: BlocBuilder<HomePageBloc, HomePageState>(
+        builder: (context, state) {
+          final homeBloc = BlocProvider.of<HomePageBloc>(context);
+
+          return SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (dummyData.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: OngoingCompetitionsCard(competitions: dummyData),
-                  ),
-                if (dummyData2.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child:
-                        OngoingGroupCompetitionsCard(competitions: dummyData2),
-                  ),
-                if (dummyData.isEmpty && dummyData2.isEmpty)
-                  const Column(
-                    children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Nothing here yet!',
-                              style: TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.bold),
-                            ),
-                          ]),
-                      Text('Compete with friends to start')
-                    ],
-                  ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Card(
-                    elevation: 12,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)),
-                    color: const Color.fromARGB(255, 184, 190, 221),
-                    child: SizedBox(
+                if (state is HomePageLoadedNoDevice)
+                  GestureDetector(
+                    onTap: () => homeBloc.add(HomeSetupInitiator(context)),
+                    child: Container(
                       width: double.infinity,
-                      height: 400,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      height: 80,
+                      color: Color.fromARGB(255, 240, 230, 239),
+                      child: Row(
                         children: [
-                          Container(
-                            width: 300,
-                            height: 300,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/trophy_icon.png'),
-                                  fit: BoxFit.cover),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 60,
+                              height: 70,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('assets/warning_icon.png'),
+                                    fit: BoxFit.cover),
+                              ),
                             ),
                           ),
                           const SizedBox(
-                            height: 12,
+                            width: 12,
                           ),
-                          const Text(
-                            'Your trophies will be right here!',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          const Text(
-                            "Well, if you get any...",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          const SizedBox(
-                            height: 12,
+                          const Flexible(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Hey!',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 26),
+                                ),
+                                Text(
+                                  "Let's start by connecting your device",
+                                  style: TextStyle(
+                                      fontSize: 16, fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Press me whenever you feel like it",
+                                  style: TextStyle(
+                                      fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),
                     ),
                   ),
-                )
+                const SizedBox(
+                  height: 12,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    if (dummyData.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: OngoingCompetitionsCard(competitions: dummyData),
+                      ),
+                    if (dummyData2.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: OngoingGroupCompetitionsCard(
+                            competitions: dummyData2),
+                      ),
+                    if (dummyData.isEmpty && dummyData2.isEmpty)
+                      const Column(
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Nothing here yet!',
+                                  style: TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ]),
+                          Text('Compete with friends to start')
+                        ],
+                      ),
+                    const TrophyCard()
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 }
 
 class DrawerScreen extends StatelessWidget {
-  const DrawerScreen({super.key});
+  DrawerScreen({super.key});
+
+  final List<Friend> friendData = [
+    Friend(name: 'Jane', email: 'defined@gmail.com', status: 'active'),
+    Friend(name: 'James', email: 'defined@gmail.com', status: 'active'),
+    Friend(name: 'Janet', email: 'defined@gmail.com', status: 'pending'),
+    Friend(name: 'George', email: 'defined@gmail.com', status: 'pending'),
+    Friend(name: 'Xavier', email: 'defined@gmail.com', status: 'active'),
+    Friend(
+        name: 'HulkHoganBrother', email: 'defined@gmail.com', status: 'pending')
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color.fromARGB(255, 156, 137, 184),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 20.0, top: 40),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                'Contacts',
-                style: TextStyle(fontSize: 32),
-              ),
-              SizedBox(
-                width: 30,
-              ),
-              Icon(
-                Icons.add_circle,
-                size: 42,
-              )
-            ]),
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.person),
-                  Text('Friend'),
-                  Icon(Icons.add),
-                  Icon(Icons.cancel_outlined)
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.person),
-                  Text('Friend'),
-                  Icon(Icons.add),
-                  Icon(Icons.cancel_outlined)
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.person),
-                  Text('Friend'),
-                  Icon(Icons.add),
-                  Icon(Icons.cancel_outlined)
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.person),
-                  Text('Friend'),
-                  Icon(Icons.add),
-                  Icon(Icons.cancel_outlined)
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.person),
-                  Text('Friend'),
-                  Icon(Icons.add),
-                  Icon(Icons.cancel_outlined)
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.person),
-                  Text('Friend'),
-                  Icon(Icons.add),
-                  Icon(Icons.cancel_outlined)
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        ],
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 156, 137, 184),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0, top: 40),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(
+                  'Contacts',
+                  style: TextStyle(fontSize: 32),
+                ),
+                SizedBox(
+                  width: 30,
+                ),
+                Icon(
+                  Icons.add_circle,
+                  size: 42,
+                )
+              ]),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: friendData.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final friend = friendData[index];
+                    if (friend.status == 'active') {
+                      return ActiveFriendTile(friend: friend);
+                    }
+                    return Container();
+                  },
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20.0, top: 40),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'Friend Requests',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 32),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                      ]),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: friendData.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final friend = friendData[index];
+                    if (friend.status == 'pending') {
+                      return PendingFriendTile(friend: friend);
+                    }
+                    return Container();
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

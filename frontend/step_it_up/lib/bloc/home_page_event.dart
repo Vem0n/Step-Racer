@@ -5,3 +5,9 @@ abstract class HomePageEvent {}
 
 class HomeLoader extends HomePageEvent {
 }
+
+class HomeSetupInitiator extends HomePageEvent {
+  final BuildContext context;
+
+  HomeSetupInitiator(this.context);
+}
