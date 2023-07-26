@@ -5,7 +5,11 @@ abstract class SetupWizardState {}
 
 class SetupWizardInitial extends SetupWizardState {}
 
-class SetupWizardInProgress extends SetupWizardState {}
+class SetupWizardInProgress extends SetupWizardState {
+  final String? selectedDevice;
+
+  SetupWizardInProgress({this.selectedDevice});
+}
 
 class SetupWizardLoading extends SetupWizardState {}
 

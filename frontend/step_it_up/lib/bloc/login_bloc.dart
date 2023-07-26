@@ -65,6 +65,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final prefs = await SharedPreferences.getInstance();
         final String? token = prefs.getString('token');
         if (token == null) {
+          emit(LoginValidated());
           return;
         }
 

@@ -36,3 +36,8 @@ flutter:
     - assets/app_icon.png
     - assets/login_header.png
     - assets/warning_icon.png
+    - assets/fitbit_device.png
+    - assets/garmin_device.png
+    - assets/google_device.png
+    - assets/mi_device.png
+    - assets/samsung_device.png
