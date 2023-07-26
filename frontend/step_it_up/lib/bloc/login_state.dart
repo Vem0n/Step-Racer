@@ -7,6 +7,8 @@ class LoginInitial extends LoginState {}
 
 class LoginInProgress extends LoginState {}
 
+class LoginValidated extends LoginState {}
+
 class LoginLoading extends LoginState {}
 
 class LoginCompleted extends LoginState {

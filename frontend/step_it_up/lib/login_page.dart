@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:step_it_up/bloc/login_bloc.dart';
 import 'package:step_it_up/models/login_data.dart';
+import 'package:step_it_up/widgets/loading_screen.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController email = TextEditingController();
@@ -36,6 +37,10 @@ class LoginPage extends StatelessWidget {
               }
               email.text = '';
               password.text = '';
+            }
+
+            if (state is LoginInitial) {
+              return LoadingAnimation();
             }
 
             if (state is LoginInProgress || state is LoginFailed) {
@@ -175,7 +180,7 @@ class LoginPage extends StatelessWidget {
                   )
                 ],
               );
-            } else if (state is LoginInitial) {
+            } else if (state is LoginValidated) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -257,10 +262,8 @@ class LoginPage extends StatelessWidget {
                 ],
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
+              return Center(
+                child: LoadingAnimation(),
               );
             }
           },

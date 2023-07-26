@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:step_it_up/widgets/loading_screen.dart';
 
 import 'bloc/register_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,11 +53,7 @@ class RegisterPage extends StatelessWidget {
             }
 
             if (state is RegisterInProgress) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
-              );
+              return LoadingAnimation();
             } else {
               return SingleChildScrollView(
                 child: Column(

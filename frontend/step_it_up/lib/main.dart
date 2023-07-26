@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:step_it_up/bloc/setup_wizard_page.dart';
+import 'package:step_it_up/setup_wizard_page.dart';
 import 'login_page.dart';
 import 'register_page.dart';
 import 'home_page.dart';

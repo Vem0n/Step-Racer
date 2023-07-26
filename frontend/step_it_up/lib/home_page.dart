@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:step_it_up/widgets/loading_screen.dart';
 import 'bloc/home_page_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'models/competition_model.dart';
@@ -24,11 +25,7 @@ class HomePage extends StatelessWidget {
             homeBloc.add(HomeLoader());
 
             if (state is HomePageInitial) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
-              );
+              return LoadingAnimation();
             } else {
               return ZoomDrawer(
                 menuScreen: DrawerScreen(),

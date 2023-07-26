@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:step_it_up/bloc/setup_wizard_page.dart';
+import 'package:step_it_up/setup_wizard_page.dart';
 
 part 'home_page_event.dart';
 part 'home_page_state.dart';

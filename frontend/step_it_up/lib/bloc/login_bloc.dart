@@ -71,6 +71,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         try {
           if (JwtDecoder.isExpired(token)) {
             prefs.remove('token');
+            emit(LoginValidated());
           } else if (!JwtDecoder.isExpired(token)) {
             Navigator.push(
               event.context,
