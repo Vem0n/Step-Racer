@@ -85,9 +85,8 @@ class _SetupWizardPageState extends State<SetupWizardPage> {
               }).toList();
 
               return Stepper(
-                currentStep: currentStep, // Set the current step index
+                currentStep: currentStep,
                 controlsBuilder: (context, _) {
-                  // Show the "Confirm" button only in the first step
                   if (currentStep == 0 && selectedDeviceName != null) {
                     return Row( mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[

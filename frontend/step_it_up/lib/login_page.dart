@@ -19,7 +19,10 @@ class LoginPage extends StatelessWidget {
           builder: (context, state) {
             final loginBloc = BlocProvider.of<LoginBloc>(context);
             if (state is LoginInitial) {
-              loginBloc.add(LoginValidator(context));
+              Future.delayed(Duration(seconds: 4), () {
+                loginBloc.add(LoginValidator(context));
+              });
+              return LoadingAnimation();
             }
 
             void loginHandler() {
@@ -39,10 +42,6 @@ class LoginPage extends StatelessWidget {
               }
               email.text = '';
               password.text = '';
-            }
-
-            if (state is LoginInitial) {
-              return LoadingAnimation();
             }
 
             if (state is LoginInProgress || state is LoginFailed) {
