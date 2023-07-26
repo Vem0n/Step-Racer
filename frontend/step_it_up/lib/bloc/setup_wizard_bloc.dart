@@ -7,7 +7,9 @@ part 'setup_wizard_state.dart';
 class SetupWizardBloc extends Bloc<SetupWizardEvent, SetupWizardState> {
   SetupWizardBloc() : super(SetupWizardInitial()) {
     on<SetupWizardEvent>((event, emit) {
-      // TODO: implement event handler
+      if (event is SetupWizardLoader) {
+        emit(SetupWizardInProgress());
+      }
     });
   }
 }
