@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth');
 const compRoutes = require('./routes/comps');
 const gCompRoutes = require('./routes/groupComps');
 const friendshipRoutes = require('./routes/friendships');
+const healthRoutes = require('./routes/health');
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.use((err, req, res, next) => {
   app.use('/friendship', friendshipRoutes);
   app.use('/comps', compRoutes);
   app.use('/groupComps', gCompRoutes);
+  app.use('/health', healthRoutes);
+
 
   const job = cron.schedule(cronSchedule, () => {
     deleteExpiredCompetitions();
