@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "test",
-    "start": "node ./app.js"
+    "start": "nodemon ./app.js"
   },
   "repository": {
     "type": "git",
@@ -23,10 +23,12 @@
     "express": "^4.18.2",
     "express-rate-limit": "^6.7.0",
     "express-validator": "^7.0.1",
+    "express-ws": "^5.0.2",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.6.0",
     "mongoose": "^7.3.1",
-    "node-cron": "^3.0.0"
+    "node-cron": "^3.0.0",
+    "ws": "^8.14.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

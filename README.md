@@ -82,9 +82,9 @@ By following this approach, I can support multiple fitness trackers while keepin
 
 Popular Fitness Trackers:
 - Samsung Galaxy Watches
-- ⚒️ Fitbit Bands/Watches
-- ⛔ Garmin Watches/Bands (Garmin doesn't share their API to non business devs, might look for workaround)
-- ⛔ Mi Bands (Xiaomi doesn't seem to provide their API to non Chinese developers, no workaround found)
+- Fitbit Bands/Watches
+- Garmin Watches/Bands
+- Mi Bands
 - Apple Watches
 
 Note: Ensure that I review the documentation and terms of use for each fitness tracker API to understand any limitations, rate limits, or restrictions that may impact the implementation.

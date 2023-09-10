@@ -1,8 +1,10 @@
 const User = require('../models/user');
 const { validationResult } = require('express-validator');
+const WebSocket = require('ws');
 const bcrypt = require('bcrypt');
 const token = require('jsonwebtoken');
 const keys = require('../config');
+const activeSockets = {};
 
 exports.signup = async (req, res, next) => {
   try {
@@ -92,3 +94,60 @@ exports.signup = async (req, res, next) => {
       return res.status(500).json( {error: 'Something went wrong'} )
     }
   };
+
+  exports.OAuth = async (req, res, next) => {
+    try {
+      const requestUrl = req.url;
+
+      const urlObject = new URL(`https://page.co${requestUrl}`);
+
+      const code = urlObject.searchParams.get('code');
+      const state = urlObject.searchParams.get('state');
+
+      console.log(`Code: ${code} State: ${state}`)
+
+      return res.status(200).json( {message: 'Data obtained succesfully'} );
+
+    } catch(err) {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+      return res.status(500).json( {error: 'Something went wrong'} )
+    }
+  }
+
+  exports.initOAuth = async (req, res, next) => {
+    try {
+      const userID = req.params.userId;
+
+      const owner = await User.findById(userID);
+
+      if (owner) {
+        const socket = new WebSocket('wss://localhost:8080');
+
+        socket.addEventListener('open', (event) => {
+          console.log('Socket online, awaiting data')
+          activeSockets[userID] = socket;
+        });
+
+        socket.addEventListener('message', (data) => {
+          console.log(`Data received: ${data}`);
+        });
+
+        socket.addEventListener('close', (event) => {
+          console.log('Connection closed, terminating')
+        });
+      } else {
+        return res.status(422).json({ message: 'Validation failed'} )
+      }
+
+
+    } catch(err) {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+      return res.status(500).json( {error: 'Something went wrong'} )
+    }
+  }

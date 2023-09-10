@@ -1,6 +1,7 @@
 const express = require('express');
 const bParser = require('body-parser');
 const mongoose = require('mongoose');
+const ws = require('ws');
 const keys = require('./config');
 const cron = require('node-cron');
 const { deleteExpiredCompetitions, deleteExpiredGroupCompetitions } = require('./cronJobs');
@@ -13,6 +14,8 @@ const friendshipRoutes = require('./routes/friendships');
 const healthRoutes = require('./routes/health');
 
 const app = express();
+const wsApp = new ws.Server({ noServer: true});
+
 
 app.use(bParser.json());
 
@@ -48,7 +51,18 @@ app.use((err, req, res, next) => {
   job2.start();
 
   mongoose.connect(keys.mdbKey).then(result => {
-    app.listen(8080);
+
+    wsApp.on('connection', (socket) => {
+      socket.on('message', message => console.log(message));
+    })
+
+    const server = app.listen(8080);
+    server.on('upgrade', (request, socket, head) => {
+      wsApp.handleUpgrade(request, socket, head, socket => {
+        wsApp.emit('connection', socket, request)
+      })
+    })
+
   }).catch(e => {
     console.log(e);
   })

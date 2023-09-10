@@ -22,5 +22,6 @@ router.put('/signup', [
 
 router.post('/login', authController.login);
 router.delete('/:userId', auth, authController.deleteUser);
+router.get('/OAuth', authController.OAuth);
 
 module.exports = router;
