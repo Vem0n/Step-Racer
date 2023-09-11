@@ -104,7 +104,21 @@ exports.signup = async (req, res, next) => {
       const code = urlObject.searchParams.get('code');
       const state = urlObject.searchParams.get('state');
 
-      console.log(`Code: ${code} State: ${state}`)
+      console.log(`Code: ${code} State: ${state}`);
+
+      const socket = activeSockets[state];
+
+      if (socket) {
+        if (code) {
+          socket.send(code);
+        } else {
+          console.log('Code not obtained, try again')
+        }
+
+        socket.close();
+      } else {
+        console.log('No active socket found for the user');
+      }
 
       return res.status(200).json( {message: 'Data obtained succesfully'} );
 
