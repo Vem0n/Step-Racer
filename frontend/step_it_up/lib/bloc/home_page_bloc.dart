@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:step_it_up/settings_menu.dart';
 import 'package:step_it_up/setup_wizard_page.dart';
 
 part 'home_page_event.dart';
@@ -24,6 +25,14 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
               MaterialPageRoute(
                 fullscreenDialog: true,
                 builder: (context) => SetupWizardPage(),
+              ),
+            );
+      } else if (event is HomeSettingsInitiator) {
+        Navigator.push(
+              event.context,
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => SettingsMenu(),
               ),
             );
       }

@@ -47,6 +47,7 @@ class MainScreen extends StatelessWidget {
   MainScreen({super.key});
 
   final List<CompetitionCard> dummyData = [
+    /*
     CompetitionCard(
         user1: 'Janet',
         user2: 'George',
@@ -71,9 +72,11 @@ class MainScreen extends StatelessWidget {
         timer: DateTime.now(),
         score1: 13,
         score2: 1),
+  */
   ];
 
   final List<GroupCompetitionCard> dummyData2 = [
+    /*
     GroupCompetitionCard(
         user1: 'James',
         user2: 'Janet',
@@ -124,6 +127,7 @@ class MainScreen extends StatelessWidget {
         score3: 400,
         score4: 12,
         score5: 11)
+  */
   ];
 
   @override
@@ -150,11 +154,7 @@ class MainScreen extends StatelessWidget {
               const SizedBox(
                 width: 12,
               ),
-              const Icon(
-                Icons.person,
-                size: 30,
-                color: Colors.black,
-              )
+              SettingsWidget()
             ],
           ),
           backgroundColor: const Color.fromARGB(255, 240, 230, 239),
@@ -184,7 +184,8 @@ class MainScreen extends StatelessWidget {
                               height: 70,
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/warning_icon.png'),
+                                    image:
+                                        AssetImage('assets/warning_icon.png'),
                                     fit: BoxFit.cover),
                               ),
                             ),
@@ -198,17 +199,21 @@ class MainScreen extends StatelessWidget {
                                 Text(
                                   'Hey!',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 26),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 26),
                                 ),
                                 Text(
                                   "Let's start by connecting your device",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   "Press me whenever you feel like it",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green),
                                 ),
                               ],
                             ),
@@ -235,20 +240,32 @@ class MainScreen extends StatelessWidget {
                             competitions: dummyData2),
                       ),
                     if (dummyData.isEmpty && dummyData2.isEmpty)
-                      const Column(
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Nothing here yet!',
-                                  style: TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ]),
-                          Text('Compete with friends to start')
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Card(
+                          elevation: 12,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18)),
+                          color: const Color.fromARGB(255, 184, 190, 221),
+                          child: const Column(
+                            children: [
+                              SizedBox(height: 40),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Nothing here yet!',
+                                      style: TextStyle(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ]),
+                              SizedBox(height: 12),
+                              Text('Compete with friends to start'),
+                              SizedBox(height: 40)
+                            ],
+                          ),
+                        ),
                       ),
                     const TrophyCard()
                   ],
@@ -386,6 +403,30 @@ class DrawerWdiget extends StatelessWidget {
         Icons.menu,
         color: Colors.black,
       ),
+    );
+  }
+}
+
+class SettingsWidget extends StatelessWidget {
+  SettingsWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => HomePageBloc(),
+      child:
+          BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
+        final homeBloc = BlocProvider.of<HomePageBloc>(context);
+
+        return IconButton(
+          onPressed: () {
+            homeBloc.add(HomeSettingsInitiator(context));
+          },
+          icon: Icon(Icons.person),
+          iconSize: 30,
+          color: Colors.black,
+        );
+      }),
     );
   }
 }

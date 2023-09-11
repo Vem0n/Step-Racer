@@ -4,6 +4,7 @@ import 'package:step_it_up/setup_wizard_page.dart';
 import 'login_page.dart';
 import 'register_page.dart';
 import 'home_page.dart';
+import 'settings_menu.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,8 @@ class MainApp extends StatelessWidget {
         '/': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
         '/home': (context) => HomePage(),
-        '/setupwizard' : (context) => SetupWizardPage()
+        '/setupwizard' : (context) => SetupWizardPage(),
+        '/settings' : (context) => SettingsMenu(),
       },
     );
   }

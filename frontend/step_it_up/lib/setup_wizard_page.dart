@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'bloc/setup_wizard_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'models/device_model.dart';
 import 'widgets/loading_screen.dart';
 
@@ -15,7 +16,6 @@ class _SetupWizardPageState extends State<SetupWizardPage> {
   final List<Device> devices = [
     Device(name: 'Fitbit Device', image: 'assets/fitbit_device.png'),
     Device(name: 'Garmin Device', image: 'assets/garmin_device.png'),
-    Device(name: 'Mi Device', image: 'assets/mi_device.png'),
     Device(name: 'Samsung Device', image: 'assets/samsung_device.png'),
     Device(name: 'Google Device', image: 'assets/google_device.png'),
   ];
@@ -88,26 +88,30 @@ class _SetupWizardPageState extends State<SetupWizardPage> {
                 currentStep: currentStep,
                 controlsBuilder: (context, _) {
                   if (currentStep == 0 && selectedDeviceName != null) {
-                    return Row( mainAxisAlignment: MainAxisAlignment.center,
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(
-                          height: 50,
-                          width: 200,
-                          child: Card(
-                            elevation: 12,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18)),
-                            child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  currentStep++;
-                                });
-                              },
-                              child: const Text(
-                                'Confirm',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12.0),
+                          child: SizedBox(
+                            height: 50,
+                            width: 200,
+                            child: Card(
+                              elevation: 12,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
+                              child: TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    currentStep++;
+                                  });
+                                },
+                                child: const Text(
+                                  'Confirm',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -122,19 +126,83 @@ class _SetupWizardPageState extends State<SetupWizardPage> {
                 steps: [
                   Step(
                     title: Text('Select your device'),
-                    content: Column(
-                      children: [
-                        Wrap(
-                          alignment: WrapAlignment.spaceEvenly,
-                          children: [
-                            ...deviceCards,
-                          ],
-                        ),
-                        SizedBox(height: 30,)
-                      ],
+                    content: CarouselSlider(
+                      options: CarouselOptions(
+                        height: 150,
+                        viewportFraction: 0.4,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: false,
+                      ),
+                      items: deviceCards,
                     ),
                   ),
-                  Step(title: Text('You are stinky'), content: Text('Take')),
+                  Step(
+                      title: Text('Authorization'),
+                      content: Column(
+                        children: [
+                          Text(
+                              'You chose a $selectedDeviceName, is that correct?'),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: SizedBox(
+                                  height: 50,
+                                  width: 150,
+                                  child: Card(
+                                    elevation: 12,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        debugPrint('Cool');
+                                      },
+                                      child: const Text(
+                                        'Yes',
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: SizedBox(
+                                  height: 50,
+                                  width: 150,
+                                  child: Card(
+                                    elevation: 12,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18)),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          currentStep--;
+                                        });
+                                      },
+                                      child: const Text(
+                                        'No',
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
                 ],
               );
             } else {

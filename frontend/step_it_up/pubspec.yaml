@@ -26,6 +26,7 @@ dev_dependencies:
   flutter_zoom_drawer: ^3.1.1
   intl: ^0.18.1
   page_view_dot_indicator: ^2.1.0
+  carousel_slider: ^4.2.1
 
 flutter:
   uses-material-design: true

@@ -11,3 +11,9 @@ class HomeSetupInitiator extends HomePageEvent {
 
   HomeSetupInitiator(this.context);
 }
+
+class HomeSettingsInitiator extends HomePageEvent {
+  final BuildContext context;
+
+  HomeSettingsInitiator(this.context);
+}
