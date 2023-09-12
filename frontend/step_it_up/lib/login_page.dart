@@ -25,6 +25,10 @@ class LoginPage extends StatelessWidget {
               return LoadingAnimation();
             }
 
+            if (state is LoginCompleted) {
+              loginBloc.add(LoginComplete(context));
+            }
+
             void loginHandler() {
               final receivedUsername = email.text;
               final receivedPassword = password.text.toString();

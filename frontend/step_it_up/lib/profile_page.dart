@@ -109,12 +109,12 @@ class ProfilePage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 12.0, right: 12.0),
                     child: CompHistory(competitions: competitions),
                   ),
-                  SizedBox(height: 40),
-                  Text(
+                  const SizedBox(height: 40),
+                  const Text(
                     'Win streak:',
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20,)
+                  const SizedBox(height: 20,)
                 ],
               ),
             );
