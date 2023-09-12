@@ -37,11 +37,11 @@
    - User registration with email and password.
    - Authentication using access tokens for secure API calls.
 
-2. **User Profile:**
+2. ✅ **User Profile:**
    - Profile picture upload or selection.
    - Selection of status emotes to display alongside the profile picture.
 
-3. **Friend Management:**
+3. ✅ **Friend Management:**
    - Ability to add friends by registered email.
    - Friend list management, including deletion of friends.
 
@@ -55,7 +55,7 @@
 5. **Notifications:**
    - Push notifications for competition updates and challenges.
 
-6. **Achievements and Rewards:**
+6. ✅ **Achievements and Rewards:**
    - Implementation of badges or achievements based on competition milestones.
    - Rewards or unlocking of special features for achieving specific targets.
 
@@ -81,10 +81,8 @@ To provide compatibility with popular fitness trackers, I plan to create classes
 By following this approach, I can support multiple fitness trackers while keeping the codebase clean and manageable. If new fitness trackers become popular in the future, I can simply add a new exportable class with its own logic and update the switch-case statements accordingly.
 
 Popular Fitness Trackers:
-- Samsung Galaxy Watches
-- Fitbit Bands/Watches
-- Garmin Watches/Bands
-- Mi Bands
-- Apple Watches
+- ✅ Fitbit Bands/Watches
+- Garmin Watches/Bands (?)
+- ✅ Google Fit support
 
-Note: Ensure that I review the documentation and terms of use for each fitness tracker API to understand any limitations, rate limits, or restrictions that may impact the implementation.
+Note: Due to the API sharing policies of previously mentioned companies I am, to my dismay, unable to offer direct support for MiBands, Samsung and very possibly Garmin devices. All these devices will still be able to work with my project once the support logic is implemented but they will be required to sync their step data with Google Fit. Might attempt to automate the process for user convenience.
