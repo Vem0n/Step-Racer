@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:step_it_up/widgets/trpohy_list.dart';
 import 'bloc/profile_page_bloc.dart';
+import 'models/trophy_model.dart';
+import 'models/competition_model.dart';
+import 'widgets/competition_history_card.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+
+  final List<Trophy> trophies = [
+    Trophy(trophyName: 'Wyciąganie chuja z wody', trophyIcon: 'placeholder'),
+    Trophy(trophyIcon: 'placeholder', trophyName: 'Otwarcie parasola'),
+    Trophy(trophyIcon: 'placeholder', trophyName: 'Kładzenie chuja na tacę')
+  ];
+
+  final List<WonCompetitionCard> competitions = [
+    WonCompetitionCard(user1: 'Luigi Pasta', user2: 'Mario Meatball'),
+    WonCompetitionCard(user1: 'Gina Gnocchi', user2: 'Tony Tortellini'),
+    WonCompetitionCard(user1: 'Sofia Spaghetti', user2: 'Vinny Vermicelli'),
+    WonCompetitionCard(user1: 'Rocco Ravioli', user2: 'Lina Lasagna'),
+    WonCompetitionCard(user1: 'Vito Veggies', user2: 'Nina Noodles'),
+    WonCompetitionCard(user1: 'Sal Pesto', user2: 'Angelina Alfredo'),
+    WonCompetitionCard(user1: 'Enzo Espresso', user2: 'Bella Biscotti'),
+    WonCompetitionCard(user1: 'Antonio Antipasto', user2: 'Isabella Risotto'),
+    WonCompetitionCard(user1: 'Giorgio Gelato', user2: 'Rosa Risotto'),
+    WonCompetitionCard(user1: 'Mario Mozzarella', user2: 'Giovanna Gorgonzola'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +48,9 @@ class ProfilePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            pageBloc.add(ProfilePageBack(context));
+                          },
                           icon: const Icon(Icons.arrow_back_ios),
                           iconSize: 30,
                           color: Colors.blue,
@@ -57,7 +82,7 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       const Column(
@@ -75,7 +100,21 @@ class ProfilePage extends StatelessWidget {
                         ],
                       ),
                     ],
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                    child: TrophyList(trophies: trophies),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                    child: CompHistory(competitions: competitions),
+                  ),
+                  SizedBox(height: 40),
+                  Text(
+                    'Win streak:',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 20,)
                 ],
               ),
             );

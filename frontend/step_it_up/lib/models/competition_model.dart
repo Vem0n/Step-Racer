@@ -16,3 +16,16 @@ class CompetitionCard {
       this.user1pic,
       this.user2pic});
 }
+
+class WonCompetitionCard {
+  late final String? user1pic;
+  late final String? user2pic;
+  late final String user1;
+  late final String user2;
+
+  WonCompetitionCard(
+      {required this.user1,
+      required this.user2,
+      this.user1pic,
+      this.user2pic});
+}

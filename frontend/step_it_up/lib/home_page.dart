@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                 borderRadius: 30,
                 showShadow: true,
                 angle: 0.0,
-                menuBackgroundColor: const Color.fromARGB(255, 156, 137, 184),
+                menuBackgroundColor: const Color.fromARGB(255, 216, 206, 216),
               );
             }
           },
@@ -174,7 +174,7 @@ class MainScreen extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       height: 80,
-                      color: Color.fromARGB(255, 240, 230, 239),
+                      color: const Color.fromARGB(255, 240, 230, 239),
                       child: Row(
                         children: [
                           Padding(
@@ -295,25 +295,57 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 156, 137, 184),
+      backgroundColor: const Color.fromARGB(255, 216, 206, 216),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 40),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 40),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
+                const Text(
                   'Contacts',
                   style: TextStyle(fontSize: 32),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
-                Icon(
-                  Icons.add_circle,
-                  size: 42,
+                Expanded(
+                  child: IconButton(
+  onPressed: () {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Enter Text'),
+          content: TextField(
+            // Add a controller to retrieve the input.
+            controller: TextEditingController(),
+            // Optionally, you can customize the TextField further.
+            decoration: InputDecoration(
+              hintText: 'Enter your text...',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Submit'),
+              onPressed: () {
+                // Do something with the input value.
+                Navigator.of(context).pop(); // Close the dialog.
+              },
+            ),
+          ],
+        );
+      },
+    );
+  },
+  icon: const Icon(
+    Icons.add_circle,
+    size: 42,
+  ),
+)
+
                 )
               ]),
             ),
@@ -422,7 +454,7 @@ class SettingsWidget extends StatelessWidget {
           onPressed: () {
             homeBloc.add(HomeSettingsInitiator(context));
           },
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           iconSize: 30,
           color: Colors.black,
         );
