@@ -52,20 +52,25 @@ class SettingsMenu extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Username',
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'View your profile',
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.lightBlue),
-                            )
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            settingsBloc.add(SettingsProfile(context));
+                          },
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Username',
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'View your profile',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.lightBlue),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     ),

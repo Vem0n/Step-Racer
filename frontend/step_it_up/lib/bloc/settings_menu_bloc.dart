@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:step_it_up/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:step_it_up/login_page.dart';
+import 'package:step_it_up/profile_page.dart';
 
 part 'settings_menu_event.dart';
 part 'settings_menu_state.dart';
@@ -35,6 +36,14 @@ class SettingsMenuBloc extends Bloc<SettingsMenuEvent, SettingsMenuState> {
           MaterialPageRoute(
             fullscreenDialog: true,
             builder: (context) => LoginPage(),
+          ),
+        );
+      } else if (event is SettingsProfile) {
+        Navigator.push(
+          event.context,
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => ProfilePage(),
           ),
         );
       }

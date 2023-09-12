@@ -17,3 +17,9 @@ class SettingsLogout extends SettingsMenuEvent {
 
   SettingsLogout(this.context);
 }
+
+class SettingsProfile extends SettingsMenuEvent {
+  final BuildContext context;
+
+  SettingsProfile(this.context);
+}
